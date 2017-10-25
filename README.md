@@ -1,5 +1,5 @@
 # Scrollable-NSSlider
-`ScrollableSlider` is a subclass of NSSlider that accepts input from scrolling. Apple doesn't support this natively, so this subclass was created to allow for scrolling input.
+`ScrollableSlider` is a subclass of NSSlider that accepts input from scrolling events. Apple doesn't support this natively, so this subclass was created to allow for scrolling input.
 
 `ScrollableSlider` supports vertical, horizontal, and circular NSSliders. It also accounts for natural scrolling, so you'll be scrolling in the right direction regardless of your settings.
 
