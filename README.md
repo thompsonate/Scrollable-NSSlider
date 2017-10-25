@@ -5,6 +5,6 @@
 
 # How to implement
 1. Add the [ScrollableSlider](ScrollableSlider.swift) class to your code.
-1. For any slider you want to operate with scrolling input, select it in interface builder and set the custom class to ScrollableSlider.
+1. For any slider you want to operate with scrolling input, select it in Interface Builder and set the custom class to ScrollableSlider.
 
 <img src="screenshots/custom-class.png" width=40% >
