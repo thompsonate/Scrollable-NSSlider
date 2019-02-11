@@ -2,7 +2,7 @@
 //  ScrollableSlider.swift
 //
 //  Created by Nate Thompson on 10/24/17.
-//
+//  Modified by Arc676/Alessandro Vinciguerra 02/11/19.
 //
 
 
@@ -14,7 +14,11 @@ class ScrollableSlider: NSSlider {
         var delta = Float(0)
         
         //Allow horizontal scrolling on horizontal and circular sliders
-        if self.isVertical && self.sliderType == .linear {
+        var vertical = false
+        if #available(OSX 10.12, *) {
+            vertical = self.isVertical
+        }
+        if vertical && self.sliderType == .linear {
             delta = Float(event.deltaY)
         } else if self.userInterfaceLayoutDirection == .rightToLeft {
             delta = Float(event.deltaY + event.deltaX)
