@@ -6,6 +6,8 @@
 //
 
 
+import Cocoa
+
 class ScrollableSlider: NSSlider {
     override func scrollWheel(with event: NSEvent) {
         guard self.isEnabled else { return }
@@ -13,8 +15,8 @@ class ScrollableSlider: NSSlider {
         let range = Float(self.maxValue - self.minValue)
         var delta = Float(0)
         
-        //Allow horizontal scrolling on horizontal and circular sliders
-        if self.isVertical && self.sliderType == .linear {
+        // Allow horizontal scrolling on horizontal and circular sliders
+        if _isVertical && self.sliderType == .linear {
             delta = Float(event.deltaY)
         } else if self.userInterfaceLayoutDirection == .rightToLeft {
             delta = Float(event.deltaY + event.deltaX)
@@ -22,7 +24,7 @@ class ScrollableSlider: NSSlider {
             delta = Float(event.deltaY - event.deltaX)
         }
         
-        //Account for natural scrolling
+        // Account for natural scrolling
         if event.isDirectionInvertedFromDevice {
             delta *= -1
         }
@@ -30,20 +32,29 @@ class ScrollableSlider: NSSlider {
         let increment = range * delta / 100
         var value = self.floatValue + increment
         
-        //Wrap around if slider is circular
+        // Wrap around if slider is circular
         if self.sliderType == .circular {
             let minValue = Float(self.minValue)
             let maxValue = Float(self.maxValue)
             
             if value < minValue {
-                value = maxValue - fabs(increment)
-            }
-            if value > maxValue {
-                value = minValue + fabs(increment)
+                value = maxValue - abs(increment)
+            } else if value > maxValue {
+                value = minValue + abs(increment)
             }
         }
         
         self.floatValue = value
         self.sendAction(self.action, to: self.target)
+    }
+    
+    
+    private var _isVertical: Bool {
+        if #available(macOS 10.12, *) {
+            return self.isVertical
+        } else {
+            // isVertical is an NSInteger in versions before 10.12
+            return self.value(forKey: "isVertical") as! NSInteger == 1
+        }
     }
 }
